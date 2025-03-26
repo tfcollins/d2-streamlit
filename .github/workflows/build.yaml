@@ -1,0 +1,78 @@
+name: Build
+
+on:
+  push:
+    branches: 
+      - "dev"
+  pull_request:
+    branches: 
+      - "dev"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node_version:
+          # For details, see: https://nodejs.dev/en/about/releases/
+          # Active LTS. End Of Life: 2025-04-30
+          - 18.x
+          # Current version
+          - 19.x
+        component_lib_version:
+          - current
+          - develop
+        streamlit_version:
+          - latest
+          - nightly
+
+    env:
+      NODE_VERSION: ${{ matrix.node_version }}
+      PYTHON_VERSION: 3.9  # Oldest version supported by Streamlit
+      STREAMLIT_VERSION: ${{ matrix.streamlit_version }}
+      COMPONENT_LIB_VERSION: ${{ matrix.component_lib_version }}
+
+    name: Build Component / node_version=${{ matrix.node_version }} / streamlit_version=${{ matrix.streamlit_version }}  / component_lib_version=${{ matrix.component_lib_version }}
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+        path: component-template
+
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Install Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install streamlit
+
+    - name: Install Node.js dependencies
+      run: |
+        npm install -g yarn
+        yarn install
+        yarn build
+      working-directory: ./template/d2/frontend
+
+    - name: Build component
+      id: component_wheels
+      run: |
+        python setup.py bdist_wheel
+      working-directory: ./template/d2
+
+    - name: Upload wheel packages
+      uses: actions/upload-artifact@v4
+      with:
+        name: all-wheel-${{ matrix.node_version }}-${{ matrix.component_lib_version }}-${{ matrix.streamlit_version }}
+        path: ./template/d2/dist/*.whl
+        if-no-files-found: error
