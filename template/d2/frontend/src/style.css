@@ -1,0 +1,12 @@
+.d2diagram {
+    /* width: 100px;
+    height: 100px; */
+    background-color: #f00;
+}
+
+.d2diagram__internal {
+    /* min-width: 400px; */
+    /* min-height: 400px; */
+    /* width: 100%; */
+    /* display: block; */
+}

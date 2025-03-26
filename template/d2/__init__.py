@@ -23,7 +23,7 @@ if not _RELEASE:
         # We give the component a simple, descriptive name ("my_component"
         # does not fit this bill, so please choose something better for your
         # own component :)
-        "my_component",
+        "d2",
         # Pass `url` here to tell Streamlit that the component will be served
         # by the local dev server that you run via `npm run start`.
         # (This is useful while your component is in development.)
@@ -35,7 +35,7 @@ else:
     # build directory:
     parent_dir = os.path.dirname(os.path.abspath(__file__))
     build_dir = os.path.join(parent_dir, "frontend/build")
-    _component_func = components.declare_component("my_component", path=build_dir)
+    _component_func = components.declare_component("d2", path=build_dir)
 
 
 # Create a wrapper function for the component. This is an optional
@@ -43,7 +43,7 @@ else:
 # `declare_component` and call it done. The wrapper allows us to customize
 # our component's API: we can pre-process its input args, post-process its
 # output value, and add a docstring for users.
-def my_component(name, key=None):
+def diagram(input, renderOptions=None, compileOptions=None, key=None):
     """Create a new instance of "my_component".
 
     Parameters
@@ -70,7 +70,14 @@ def my_component(name, key=None):
     #
     # "default" is a special argument that specifies the initial return
     # value of the component before the user has interacted with it.
-    component_value = _component_func(name=name, key=key, default=0)
+    component_value = _component_func(input=input,
+                                      className=key,
+                                      compileOptions=compileOptions,
+                                      renderOptions=renderOptions,
+                                      key=key, default=0)
+    
+    # print(f"{component_value=}")
+    component_value = None
 
     # We could modify the value returned from the component if we wanted.
     # There's no need to do this in our simple example - but it's an option.

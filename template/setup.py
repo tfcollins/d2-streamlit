@@ -6,11 +6,11 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 setuptools.setup(
-    name="streamlit-custom-component",
+    name="streamlit-d2",
     version="0.0.1",
-    author="John Smith",
-    author_email="john@example.com",
-    description="Streamlit component that allows you to do X",
+    author="Travis Collins",
+    author_email="travis.collins@analog.com",
+    description="Streamlit component that allows you to use D2 diagrams",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="",

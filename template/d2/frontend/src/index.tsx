@@ -1,10 +1,10 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import MyComponent from "./MyComponent"
+import D2Diagram from "./D2Diagram"
 
 ReactDOM.render(
   <React.StrictMode>
-    <MyComponent />
+    <D2Diagram />
   </React.StrictMode>,
   document.getElementById("root")
 )
