@@ -67,7 +67,7 @@ jobs:
       id: component_wheels
       run: |
         export RELEASE=true
-        python setup.py sdist bdist_wheel
+        python setup.py bdist_wheel --universal sdist
       working-directory: ./template
 
     - name: Upload wheel packages
