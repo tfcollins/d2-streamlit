@@ -66,8 +66,9 @@ jobs:
     - name: Build component
       id: component_wheels
       run: |
-        python setup.py bdist_wheel
-      working-directory: ./template/d2
+        export RELEASE=true
+        python setup.py sdist bdist_wheel
+      working-directory: ./template
 
     - name: Upload wheel packages
       uses: actions/upload-artifact@v4

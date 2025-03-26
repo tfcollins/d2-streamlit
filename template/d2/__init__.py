@@ -6,6 +6,8 @@ import streamlit.components.v1 as components
 # (This is, of course, optional - there are innumerable ways to manage your
 # release process.)
 _RELEASE = False
+if os.environ.get("RELEASE", "false").lower() == "true":
+    _RELEASE = True
 
 # Declare a Streamlit component. `declare_component` returns a function
 # that is used to create instances of the component. We're naming this
