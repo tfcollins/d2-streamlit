@@ -61,7 +61,7 @@ jobs:
         npm install -g yarn
         yarn install
         yarn build
-      working-directory: ./template/d2/frontend
+      working-directory: ./d2/frontend
 
     - name: Build component
       id: component_wheels
@@ -74,5 +74,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: all-wheel-${{ matrix.node_version }}-${{ matrix.component_lib_version }}-${{ matrix.streamlit_version }}
-        path: ./template/dist/*.whl
+        path: ./dist/*.whl
         if-no-files-found: error
