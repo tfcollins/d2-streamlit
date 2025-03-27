@@ -68,7 +68,7 @@ jobs:
       run: |
         export RELEASE=true
         python setup.py bdist_wheel --universal sdist
-      working-directory: ./template
+      working-directory: ./
 
     - name: Upload wheel packages
       uses: actions/upload-artifact@v4
