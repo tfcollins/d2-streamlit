@@ -23,7 +23,6 @@ jobs:
           - 19.x
         component_lib_version:
           - current
-          - develop
         streamlit_version:
           - latest
           - nightly
@@ -77,6 +76,7 @@ jobs:
         if-no-files-found: error
 
     - uses: pypa/gh-action-pypi-publish@release/v1
+      if: ${{ matrix.node_version }} == '19.x' && ${{ matrix.streamlit_version }} == 'latest'
       with:
         user: __token__
         password: ${{ secrets.TEST_PYPI_TOKEN }}
